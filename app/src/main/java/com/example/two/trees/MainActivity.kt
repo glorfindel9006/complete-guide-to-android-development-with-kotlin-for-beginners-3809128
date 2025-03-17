@@ -90,9 +90,11 @@ fun StateApp() {
                     guess = guess,
                     guessChanged = { newGuess ->
                         // TODO: update the previous guess
+                        guess = newGuess
                     },
                     checkGuess = {
                         guessedState = states.find { it == guess }
+                        println("guessedState ${guessedState}")
                     }
                 )
 
@@ -120,6 +122,7 @@ fun EnterGuess(
             value = guess,
             onValueChange = {
                 // TODO: call correct parameter
+                guessChanged(it)
             },
             placeholder = {
                 Text("Enter a state")
@@ -131,6 +134,7 @@ fun EnterGuess(
         Button(
             onClick = {
                 // TODO: call correct parameter
+                checkGuess()
             }
         ) {
             Text(
