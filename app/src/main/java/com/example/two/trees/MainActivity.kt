@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -46,9 +47,10 @@ fun TwoTreesApp() {
             }
         ) { innerPadding ->
             val viewModel = viewModel<MainViewModel>()
-            var productImageId by remember {
-                mutableIntStateOf(R.drawable.logo)
-            }
+
+            //since productImageId is StateFlow, here it has to convert into lifecycle aware state
+            //which can work with Compose
+            val productImageId by viewModel.productImageId.collectAsStateWithLifecycle()
 
             Column(
                 modifier = Modifier.padding(innerPadding)
@@ -63,7 +65,7 @@ fun TwoTreesApp() {
                         .build(),
                     contentDescription = null,
                     modifier = Modifier.clickable {
-                        productImageId = viewModel.generateNewImageId()
+                        viewModel.generateNewImageId()
                     }
                 )
             }
