@@ -19,7 +19,7 @@ class MainViewModel(
 
     init {
         val product = Product(
-            name = "Sandy Sears",
+            productName = "Sandy Sears",
             imageFile = "efficiantur",
             description = "molestiae",
             size = 2659,
@@ -28,10 +28,15 @@ class MainViewModel(
         Log.i(TAG, "initialized")
         Log.i(TAG, product.toString())
 
-        val data = productRepository.getTextFromAssets(
+//        val data = productRepository.getTextFromAssets(
+//            filename = "olive_oils_data.json"
+//        )
+        val data = productRepository.getProducts(
             filename = "olive_oils_data.json"
         )
-        Log.i(TAG, data)
+        data?.forEach {
+            Log.i(TAG, "Product name: ${it.productName}")
+        }
     }
 
 }
